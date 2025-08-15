@@ -1,0 +1,29 @@
+# Byte-compiled / cache
+__pycache__/
+*.py[cod]
+*.pyo
+*.pyd
+*.egg-info/
+
+# Virtual environment
+venv/
+.env
+*.env
+
+# IDE / OS
+.vscode/
+.idea/
+.DS_Store
+Thumbs.db
+
+# Test / tooling
+.pytest_cache/
+.mypy_cache/
+coverage/
+
+# SQLite DB
+*.db
+*.sqlite3
+
+# Logs
+*.log
