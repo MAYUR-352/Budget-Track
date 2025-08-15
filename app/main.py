@@ -1,6 +1,6 @@
 from fastapi import FastAPI, HTTPException, Depends
 from fastapi.middleware.cors import CORSMiddleware
-from fastapi.responses import FileResponse
+from fastapi.responses import RedirectResponse, Response
 from sqlalchemy import create_engine, Column, Integer, String, Float, DateTime, text
 from sqlalchemy.ext.declarative import declarative_base
 from sqlalchemy.orm import sessionmaker, Session
@@ -105,6 +105,17 @@ def get_db():
 
 
 # API Routes
+@app.get("/", include_in_schema=False)
+def root_get():
+    # Redirect browser users to the Swagger UI
+    return RedirectResponse(url="/docs")
+
+
+@app.head("/", include_in_schema=False)
+def root_head():
+    # Render (and many proxies) send HEAD requests for health checks.
+    # Return 200 to avoid 405 errors in logs.
+    return Response(status_code=200)
 
 
 # Expenses endpoints
@@ -223,15 +234,6 @@ def get_summary(db: Session = Depends(get_db)):
         ],
         "recent_expenses": recent_expenses,
     }
-
-
-
-
-
-# Serve index.html at root
-@app.get("/")
-def read_root():
-    return FileResponse("static/index.html")
 
 
 if __name__ == "__main__":
